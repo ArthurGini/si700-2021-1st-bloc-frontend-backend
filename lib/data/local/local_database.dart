@@ -5,12 +5,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseLocalServer {
-  /* 
+  /*
     Criando singleton
   */
   static DatabaseLocalServer helper = DatabaseLocalServer._createInstance();
   DatabaseLocalServer._createInstance();
 
+  // O obj helper possui apenas o obj database
   static Database _database;
 
   String noteTable = "note_table";
@@ -25,6 +26,7 @@ class DatabaseLocalServer {
     return _database;
   }
 
+  // Iniciando o arquivo de banco de dados no armazenamento local do dispositivo
   Future<Database> initializeDatabase() async {
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + "notes.db";
@@ -34,6 +36,7 @@ class DatabaseLocalServer {
     return notesDatabase;
   }
 
+  // Criando o schema do banco de dados
   _createDb(Database db, int newVersion) async {
     await db.execute(
         "CREATE TABLE $noteTable ($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colDescription TEXT)");
